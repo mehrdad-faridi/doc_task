@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wordpress-config
+  labels:
+    {{- include "wordpress-app.labels" . | nindent 4 }}
+data:
+  WORDPRESS_TITLE: {{ .Values.configMap.WORDPRESS_TITLE }}
+  WORDPRESS_ADMIN_USER: {{ .Values.configMap.WORDPRESS_ADMIN_USER }}
+  WORDPRESS_ADMIN_PASSWORD: {{ .Values.configMap.WORDPRESS_ADMIN_PASSWORD }}
+  WORDPRESS_ADMIN_EMAIL: {{ .Values.configMap.WORDPRESS_ADMIN_EMAIL }}

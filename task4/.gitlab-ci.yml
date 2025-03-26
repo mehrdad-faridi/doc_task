@@ -1,0 +1,28 @@
+stages:
+  - test
+  - build
+
+variables:
+  DOCKER_DRIVER: overlay2
+  APP_NAME: sample-app
+  DOCKER_IMAGE: $CI_REGISTRY_IMAGE/$APP_NAME:$CI_COMMIT_SHORT_SHA
+
+unit_test:
+  stage: test
+  image: python:3.11-slim
+  script:
+    - pip install -r requirements.txt || true
+    - python -m unittest discover tests
+  only:
+    - main
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+  only:
+    - main
