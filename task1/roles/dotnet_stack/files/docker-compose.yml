@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  web:
+    image: mcr.microsoft.com/dotnet/samples:aspnetapp
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: dotnetuser
+      POSTGRES_PASSWORD: dotnetpass
+      POSTGRES_DB: dotnetdb
